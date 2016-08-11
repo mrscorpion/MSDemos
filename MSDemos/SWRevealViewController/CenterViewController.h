@@ -11,7 +11,8 @@
 typedef NS_ENUM(NSUInteger, Type) {
     None,
     TableViewType,
-    CollectionViewType
+    CollectionViewType,
+    LayerType
 };
 
 @interface CenterViewController : BaseViewController

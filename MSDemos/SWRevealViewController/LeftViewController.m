@@ -17,6 +17,8 @@ UITableViewDelegate
 >
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *menuArray;
+
+@property (nonatomic, strong) UINavigationController *nav;
 @property (nonatomic, strong) CenterViewController *vc;
 @end
 
@@ -33,7 +35,7 @@ UITableViewDelegate
 -(void)initData
 {
 //    _menuArray = [NSArray arrayWithObjects:@"顶部cellheight逐步增大", @"头部拉伸效果",@"倾斜的Cell", @"瀑布流",@"照片墙", @"网格视图", nil];
-    _menuArray = [NSArray arrayWithObjects:@"UITableView", @"UICollectionView", nil];
+    _menuArray = [NSArray arrayWithObjects:@"UITableView", @"UICollectionView", @"Layer", nil];
 }
 
 - (void)initView
@@ -75,16 +77,23 @@ UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SWRevealViewController *revealViewController = self.revealViewController;
-    self.vc.type = indexPath.row + 1;
+//    //调用pushFrontViewController进行页面切换
     
-    //调用pushFrontViewController进行页面切换
-    UINavigationController *nav = nil;
-    if (!self.vc.parentViewController) {
-        nav = [[UINavigationController alloc] initWithRootViewController:self.vc];
-        [revealViewController pushFrontViewController:nav animated:YES];
-    } else {
-        [revealViewController pushFrontViewController:self.vc animated:YES];
+//    if (!self.vc.parentViewController) {
+    self.nav = [[UINavigationController alloc] initWithRootViewController:self.vc];
+        self.vc.type = indexPath.row + 1;
+        [revealViewController pushFrontViewController:self.nav animated:YES];
+//    } else {
+//        self.vc.type = indexPath.row + 1;
+//        [revealViewController pushFrontViewController:self.vc animated:YES];
+//    }
+}
+- (UINavigationController *)nav
+{
+    if (!_nav) {
+        _nav = [[UINavigationController alloc] init];
     }
+    return _nav;
 }
 - (CenterViewController *)vc
 {

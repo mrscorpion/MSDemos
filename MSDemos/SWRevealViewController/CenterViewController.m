@@ -18,6 +18,8 @@
 #import "Demo6ViewController.h"
 #import "Demo7ViewController.h"
 
+#import "LayerTVC.h"
+
 @interface CenterViewController ()
 <
 UITableViewDelegate,
@@ -28,16 +30,11 @@ UITableViewDataSource
 @end
 
 @implementation CenterViewController
-
+#pragma mark - View Life Cycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.title = @"Mr Scorpion";
-    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
-    self.navigationController.navigationBar.opaque = YES;
-    self.navigationController.navigationBar.translucent = NO;
-    [self configureNavigationController];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.delegate = self;
@@ -48,17 +45,31 @@ UITableViewDataSource
     //注册该页面可以执行滑动切换
     SWRevealViewController *revealController = self.revealViewController;
     [self.view addGestureRecognizer:revealController.panGestureRecognizer];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self configureNavigationController];
     
     if (self.type == 1) {
         self.dataArr = @[@"滚动时的视觉差效果"];
     } else if (self.type == 2) {
         self.dataArr = @[@"顶部cellheight逐步增大", @"头部拉伸效果",@"倾斜的Cell", @"瀑布流",@"照片墙", @"网格视图"];
-    } else {
+    } else if (self.type == 3) {
+        self.dataArr = @[@"CAShapeLayer实现View的遮罩效果"];
+    }
+    else {
         self.dataArr = @[@"Mr Scorpion"];
     }
+    [self.tableView reloadData];
 }
+
 - (void)configureNavigationController
 {
+    self.navigationController.navigationBar.barTintColor = [UIColor purpleColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    self.navigationController.navigationBar.opaque = YES;
+    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.hidesBarsOnSwipe = YES;
 }
 
@@ -96,6 +107,9 @@ UITableViewDataSource
             [self collectionSelectedIndex:indexPath.row];
             break;
             
+        case 3:
+            [self layerSelectedIndex:indexPath.row];
+            break;
         default:
             break;
     }
@@ -133,12 +147,17 @@ UITableViewDataSource
     }
     [self.navigationController pushViewController:vc animated:YES];
 }
+- (void)layerSelectedIndex:(NSInteger)index
+{
+    LayerTVC *vc = [[LayerTVC alloc] initWithStyle:UITableViewStylePlain];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

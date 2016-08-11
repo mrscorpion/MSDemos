@@ -64,12 +64,8 @@ UIScrollViewDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     LRAnimationCell *cell = [LRAnimationCell cellFromXib:tableView cellAnchorPoint:_cellAnchorPoint angle:_angle];
-    
     cell.backgroundImage.image = LRGetImage(indexPath.row + 1);
-    
-    
     return cell;
 }
 
@@ -82,12 +78,11 @@ UIScrollViewDelegate
     
     CATransform3D transform = CATransform3DIdentity;
     transform = CATransform3DRotate(transform, 0, 0, 0, 1);//渐变
-    transform = CATransform3DTranslate(transform, -200, 0, 0);//左边水平移动
-    //        transform = CATransform3DScale(transform, 0, 0, 0);//由小变大
+//    transform = CATransform3DTranslate(transform, -200, 0, 0);//左边水平移动
+    transform = CATransform3DScale(transform, 0, 0, 0);//由小变大
     
     cell.layer.transform = transform;
     cell.layer.opacity = 0.0;
-    
     [UIView animateWithDuration:0.6 animations:^{
         cell.layer.transform = CATransform3DIdentity;
         cell.layer.opacity = 1;
@@ -98,11 +93,8 @@ UIScrollViewDelegate
 //滚动监听
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     if (scrollView != self.tableView) return;
-    
     CGFloat y = scrollView.contentOffset.y;
-    
     if (y > _lastScrollOffset) {//用户往上拖动
         // x=0 y=0 左
         // x=1 y=0 -angle 右
@@ -117,7 +109,5 @@ UIScrollViewDelegate
     }
     //存储最后的y值
     _lastScrollOffset = y;
-    
 }
-
 @end
