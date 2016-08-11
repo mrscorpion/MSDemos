@@ -10,6 +10,7 @@
 #import "MaskVC.h"
 #import "CircleProgressVC.h"
 #import "DynamicVC.h"
+#import "RhythmVC.h"
 
 @interface LayerTVC ()
 @property (nonatomic, strong) NSArray *dataArr;
@@ -21,7 +22,7 @@
 {
     [super viewDidLoad];
     
-    self.dataArr = @[@"使用CAShapeLayer实现View的遮罩效果", @"圆形进度条", @"使用CAShapeLayer动态改变进度"];
+    self.dataArr = @[@"使用CAShapeLayer实现View的遮罩效果", @"圆形进度条", @"使用CAShapeLayer动态改变进度", @"随机律动"];
     
     self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"53"]];
 }
@@ -61,6 +62,10 @@
             
         case 2:
             [self.navigationController pushViewController:[[DynamicVC alloc] init] animated:YES];
+            break;
+            
+        case 3:
+            [self.navigationController pushViewController:[[RhythmVC alloc] init] animated:YES];
             break;
         default:
             break;
